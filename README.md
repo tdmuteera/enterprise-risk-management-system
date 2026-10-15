@@ -1,4 +1,4 @@
-# Enterprise Risk Management System — Enterprise Risk Management (ERM) Platform
+# Enterprise Risk Management System
 
 A full-stack enterprise risk management system: organisations register risks, score them, assign mitigations, track them through controlled workflow states and report to management. Built solo.
 
