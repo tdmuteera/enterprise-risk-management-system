@@ -1,0 +1,30 @@
+# Render Blueprint (free tier). Not deployed yet.
+services:
+  - type: web
+    name: vana-dumi-erm-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: alembic upgrade head || true; uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /docs
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: "False"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALGORITHM
+        value: HS256
+      - key: DATABASE_URL   # must use the postgresql+asyncpg:// scheme; edit after linking the DB
+        fromDatabase:
+          name: vana-dumi-erm-db
+          property: connectionString
+      - key: CORS_ORIGINS
+        value: https://vana-dumi-erm.vercel.app
+      - key: ALLOW_OPEN_REGISTRATION
+        value: "false"
+databases:
+  - name: vana-dumi-erm-db
+    plan: free

@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sora:wght@500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth antialiased;
+  }
+
+  body {
+    @apply font-sans bg-page text-slate-900;
+    background-image:
+      radial-gradient(ellipse 120% 80% at 100% -20%, rgba(46, 117, 182, 0.09), transparent 50%),
+      radial-gradient(ellipse 80% 60% at 0% 100%, rgba(21, 43, 82, 0.06), transparent 45%),
+      linear-gradient(180deg, #f0f3f9 0%, #e8ecf4 100%);
+    background-attachment: fixed;
+  }
+
+  input[type="email"],
+  input[type="password"],
+  input[type="text"],
+  input[type="number"],
+  textarea,
+  select {
+    @apply transition-colors duration-200;
+  }
+}
+
+@layer components {
+  .text-gradient {
+    @apply bg-gradient-to-r from-brand-mid via-brand-accent to-brand-dark bg-clip-text text-transparent;
+  }
+
+  .card-shadow {
+    @apply shadow-shell transition-shadow duration-300 hover:shadow-nav;
+  }
+
+  .layout-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+  }
+
+  .layout-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .layout-scrollbar::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-white/20;
+  }
+}

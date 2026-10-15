@@ -1,0 +1,45 @@
+version: '3.9'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: erm_postgres
+    environment:
+      POSTGRES_USER: erm_user
+      POSTGRES_PASSWORD: erm_password
+      POSTGRES_DB: erm_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U erm_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # FastAPI Application
+  api:
+    build: .
+    container_name: erm_api
+    environment:
+      DATABASE_URL: postgresql+asyncpg://erm_user:erm_password@postgres:5432/erm_db
+      SECRET_KEY: production-secret-key-change-this
+      DEBUG: "False"
+      CORS_ORIGINS: '["http://localhost:5173", "http://localhost:3000"]'
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./:/app
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+volumes:
+  postgres_data:
+
+networks:
+  default:
+    name: erm_network

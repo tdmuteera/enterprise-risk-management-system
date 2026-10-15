@@ -1,0 +1,51 @@
+{
+  "name": "erm-prototype-desktop",
+  "version": "1.0.0",
+  "private": true,
+  "main": "main.js",
+  "author": "ERM Prototype",
+  "description": "Enterprise Risk Management — local desktop prototype (Electron + FastAPI + SQLite)",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder --win nsis"
+  },
+  "devDependencies": {
+    "electron": "^28.3.3",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.vana.erm.prototype",
+    "productName": "ERM Prototype",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "dist/erm-backend",
+        "to": "backend",
+        "filter": ["**/*"]
+      },
+      {
+        "from": "resources/erm_seed.db",
+        "to": "erm_seed.db"
+      }
+    ],
+    "win": {
+      "target": ["nsis"],
+      "artifactName": "ERM-Prototype-Setup-${version}.${ext}",
+      "signAndEditExecutable": false,
+      "signDlls": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    }
+  }
+}

@@ -1,0 +1,5 @@
+release/
+dist/
+build/
+node_modules/
+resources/spa/
